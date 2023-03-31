@@ -75,7 +75,7 @@ def getDinnerOrder():                                                           
         menuPrice = float(menu[x]['price']) * quantity
         chosenMenu[x] = {}
         chosenMenu[x].update({'a': menu[dinner]["food item"], 'b': menu[dinner]['price'], "Quantity": quantity, 'Price': menuPrice}) 
-    print(chosenMenu)
+    
     totalPrice = 0
     for t in chosenMenu:
         totalPrice += float(chosenMenu[t]['Price'])
