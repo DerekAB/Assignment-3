@@ -72,7 +72,7 @@ def getDinnerOrder():                                                           
         
         quantity = float(input("How many do you want?: "))
         
-        menuPrice = float(menu[x]['price']) * quantity
+        menuPrice = float(menu[dinner]['price']) * quantity
         chosenMenu[x] = {}
         chosenMenu[x].update({'a': menu[dinner]["food item"], 'b': menu[dinner]['price'], "Quantity": quantity, 'Price': menuPrice}) 
     
@@ -94,7 +94,7 @@ def getDinnerOrder():                                                           
     
     print('                           ')
     for u in chosenMenu:
-        print(chosenMenu[u]['a'] + " * " + str(chosenMenu[u]['Price']))                   #Printing the reciept to the user and asking for confirmation
+        print(chosenMenu[u]['a'] + " * " + '$' + str(chosenMenu[u]['Price']))                   #Printing the reciept to the user and asking for confirmation
     print('                             ')
     print('----------------------------')
     print('                                  ')
@@ -216,20 +216,29 @@ if delivery == 1:
     if tip == 3:
         tip = grandTotal * 0.2
 #if the customer chooses delivery, the program will ask for the tip amount and calculate the tip based on the order price
-    
+data = []   
 if student == "y":
     if delivery == 2:
         endPrice = round(tax + studentDis, 3)
         print(addressPrint())
-        data = [chosenMenu['a'], str(chosenMenu['Quantity']), '$' + str(chosenMenu['b']), '$' + str(grandTotal)], ['10% Student Savings', '', '', '$' + str(studentDif)], ['', '', 'Sub Total', '$' + str(studentDis)], ['', '', 'Tax (13%)', '$' + str(tax)], ['', '', 'Total', '$' + str(endPrice)]
+        for h in chosenMenu:
+            data.append([chosenMenu[h]['a'], str(chosenMenu[h]['Quantity']), '$' + str(chosenMenu[h]['b']), '$' + str(chosenMenu[h]['Price'])])
+        data.append(['10% Student Savings', '', '', '$' + str(studentDif)]) 
+        data.append(['', '', 'Sub Total', '$' + str(studentDis)]) 
+        data.append(['', '', 'Tax (13%)', '$' + str(tax)])             
+        data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 30))
     if delivery == 1:
         endPrice = round(tax + studentDis + deliveryFee + tip, 3)
-        print(addressPrint())
-        data = []
+        print(addressPrint())       
         for h in chosenMenu:
-            data += [chosenMenu[h]['a'], str(chosenMenu[h]['Quantity']), '$' + str(chosenMenu[h]['b']), '$' + str(grandTotal)]
-        data += ['10% Student Savings', '', '', '$' + str(studentDif)], ['', '', 'Sub Total', '$' + str(studentDis)], ['', '', 'Tip', '$' + str(tip)], ['', '', 'Tax (13%)', '$' + str(tax)], ['', '', 'Delivery', '$' + str(deliveryFee)], ['', '', 'Total', '$' + str(endPrice)]
+            data.append([chosenMenu[h]['a'], str(chosenMenu[h]['Quantity']), '$' + str(chosenMenu[h]['b']), '$' + str(chosenMenu[h]['Price'])])
+        data.append(['10% Student Savings', '', '', '$' + str(studentDif)]) 
+        data.append(['', '', 'Sub Total', '$' + str(studentDis)]) 
+        data.append(['', '', 'Tip', '$' + str(tip)]) 
+        data.append(['', '', 'Tax (13%)', '$' + str(tax)]) 
+        data.append(['', '', 'Delivery', '$' + str(deliveryFee)]) 
+        data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 25))
 #printing the final order reciept to the customer based on the inputs from earlier
     
@@ -237,11 +246,21 @@ if student == "n":
     if delivery == 2:
         endPrice = round(tax + grandTotal, 3)
         print(addressPrint())
-        data = [chosenMenu['a'], str(chosenMenu['Quantity']), '$' + str(chosenMenu['b']), '$' + str(grandTotal)], ['', '', 'Sub Total', '$' + str(grandTotal)], ['', '', 'Tax (13%)', '$' + str(tax)], ['', '', 'Total', '$' + str(endPrice)]
+        for h in chosenMenu:
+            data.append([chosenMenu[h]['a'], str(chosenMenu[h]['Quantity']), '$' + str(chosenMenu[h]['b']), '$' + str(chosenMenu[h]['Price'])]) 
+        data.append(['', '', 'Sub Total', '$' + str(grandTotal)]) 
+        data.append(['', '', 'Tax (13%)', '$' + str(tax)]) 
+        data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 25))
     if delivery == 1:
         endPrice = round(tax + grandTotal + deliveryFee + tip, 3)
         print(addressPrint())
-        data = [chosenMenu['a'], str(chosenMenu['Quantity']), '$' + str(chosenMenu['b']), '$' + str(grandTotal)], ['', '', 'Sub Total', '$' + str(grandTotal)], ['', '', 'Tip', '$' + str(tip)], ['', '', 'Tax (13%)', '$' + str(tax)], ['', '', 'Delivery', '$' + str(deliveryFee)], ['', '', 'Total', '$' + str(endPrice)]
+        for h in chosenMenu:
+            data.append([chosenMenu[h]['a'], str(chosenMenu[h]['Quantity']), '$' + str(chosenMenu[h]['b']), '$' + str(chosenMenu[h]['Price'])]) 
+        data.append(['', '', 'Sub Total', '$' + str(grandTotal)]) 
+        data.append(['', '', 'Tip', '$' + str(tip)]) 
+        data.append(['', '', 'Tax (13%)', '$' + str(tax)]) 
+        data.append(['', '', 'Delivery', '$' + str(deliveryFee)]) 
+        data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 25))
 #printing the final order reciept to the customer based on the inputs from earlier
