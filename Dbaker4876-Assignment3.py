@@ -7,6 +7,9 @@
 #This program will help Arnold take orders from customers and calculate the cost of the order
 #The program will ask for what they want to order, ask them to confirm their order, and then print them a reciept 
 
+path = "Reciept.txt"
+#defining file path
+
 menu = {
     1: {"food item": "Austin's Pemeal Bacon", "price": 15},
     2: {"food item": "Aaron's Poutine", "price": 10},
@@ -64,14 +67,16 @@ def getDinnerOrder():                                                           
             print("{0}: {1}".format(key, x[key]))
 #printing out the menu for easy reading
     
-    o = int(input('How many menu items would you like?: '))
+    #asking the user how many menu items they want and to what quantity, and then adding their selection to a nested dictionary
+    o = int(input('How many menu items would you like?: ')) 
     for x in range(1, o + 1):
         dinner = float(input("Please enter the number of the menu item you want: "))
         while dinner not in range(1, 7):
             dinner = float(input("Please enter a valid menu number: "))
         
-        quantity = float(input("How many do you want?: "))
         
+        quantity = float(input("How many do you want?: "))
+            
         menuPrice = float(menu[dinner]['price']) * quantity
         chosenMenu[x] = {}
         chosenMenu[x].update({'a': menu[dinner]["food item"], 'b': menu[dinner]['price'], "Quantity": quantity, 'Price': menuPrice}) 
@@ -228,6 +233,9 @@ if student == "y":
         data.append(['', '', 'Tax (13%)', '$' + str(tax)])             
         data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 30))
+        with open(path, 'w') as output:
+            output.write(formatBill(data, headers, 30))
+            
     if delivery == 1:
         endPrice = round(tax + studentDis + deliveryFee + tip, 3)
         print(addressPrint())       
@@ -240,6 +248,9 @@ if student == "y":
         data.append(['', '', 'Delivery', '$' + str(deliveryFee)]) 
         data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 25))
+        with open(path, 'w') as output:
+            output.write(formatBill(data, headers, 30))
+        
 #printing the final order reciept to the customer based on the inputs from earlier
     
 if student == "n":
@@ -252,6 +263,9 @@ if student == "n":
         data.append(['', '', 'Tax (13%)', '$' + str(tax)]) 
         data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 25))
+        with open(path, 'w') as output:
+            output.write(formatBill(data, headers, 30))
+            
     if delivery == 1:
         endPrice = round(tax + grandTotal + deliveryFee + tip, 3)
         print(addressPrint())
@@ -263,4 +277,6 @@ if student == "n":
         data.append(['', '', 'Delivery', '$' + str(deliveryFee)]) 
         data.append(['', '', 'Total', '$' + str(endPrice)])
         print(formatBill(data, headers, 25))
+        with open(path, 'w') as output:
+            output.write(formatBill(data, headers, 30))
 #printing the final order reciept to the customer based on the inputs from earlier
